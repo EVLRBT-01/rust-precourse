@@ -79,7 +79,28 @@ mod tests {
     }
 
     #[test]
-    fn exercise_5() {}
+    fn exercise_5() {
+        fn fibonacci(n: usize) -> Vec<usize> {
+            let mut sequence = vec![];
+            for i in 0..n {
+                if i <= 1 {
+                    sequence.push(i)
+                } else {
+                    let x = sequence.len();
+                    sequence.push(sequence[x - 1] + sequence[x - 2]);
+                }
+            }
+            sequence
+        }
+
+        println!("{:?}", fibonacci(0));
+        println!("{:?}", fibonacci(1));
+        println!("{:?}", fibonacci(2));
+        println!("{:?}", fibonacci(10));
+    }
+
+    #[test]
+    fn exercise_6() {}
 
     // #[test]
     // fn iterator_question() {
