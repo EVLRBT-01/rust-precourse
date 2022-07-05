@@ -124,23 +124,23 @@ mod tests {
     #[test]
     fn exercise_7() {
         // • Write a generic struct Pair, which accepts two different types. Pair stores the two values in a field ‘first’ and a field ‘second’.
-        struct Pair<F: Copy, S: Copy> {
+        struct Pair<F, S> {
             first: F,
             second: S,
         }
 
-        impl<F: Copy, S: Copy> Pair<F, S> {
+        impl<F, S> Pair<F, S> {
             // • Build a 'new' method for it
             fn new(first: F, second: S) -> Self {
                 Self { first, second }
             }
 
-            // • Build the get_left and get_right methods, which returns the first and second element of the Pair
-            fn get_left(&self) -> F {
-                self.first
+            // • Build the get_first and get_second methods, which returns the first and second element of the Pair
+            fn get_first(&self) -> &F {
+                &self.first
             }
-            fn get_right(&self) -> S {
-                self.second
+            fn get_second(&self) -> &S {
+                &self.second
             }
         }
 
@@ -148,14 +148,20 @@ mod tests {
         let first = 1;
         let second = 2.34;
         let pair = Pair::new(first, second);
-        assert_eq!(first, pair.get_left());
-        assert_eq!(second, pair.get_right());
+        assert_eq!(first, *pair.get_first());
+        assert_eq!(second, *pair.get_second());
 
         let first = 10.23;
         let second = 18u8;
         let pair = Pair::new(first, second);
-        assert_eq!(first, pair.get_left());
-        assert_eq!(second, pair.get_right());
+        assert_eq!(first, *pair.get_first());
+        assert_eq!(second, *pair.get_second());
+
+        let first = 'Z';
+        let second = true;
+        let pair = Pair::new(first, second);
+        assert_eq!(first, *pair.get_first());
+        assert_eq!(second, *pair.get_second());
     }
 
     // #[test]
