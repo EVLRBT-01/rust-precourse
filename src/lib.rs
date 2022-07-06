@@ -164,6 +164,44 @@ mod tests {
         assert_eq!(second, *pair.get_second());
     }
 
+    #[test]
+    fn exercise_8() {
+        // Build an iterator that will produce the Fibonacci numbers: 0, 1, 1, 2, 3, 5, 8, …
+        struct Fibonacci {
+            first: usize,
+            second: usize,
+        }
+
+        impl Fibonacci {
+            fn new() -> Fibonacci {
+                Fibonacci {
+                    first: 0,
+                    second: 1,
+                }
+            }
+        }
+
+        impl Iterator for Fibonacci {
+            type Item = usize;
+
+            fn next(&mut self) -> Option<Self::Item> {
+                // todo: check overflow
+                let result = Some(self.first);
+                let sum = self.first + self.second;
+                self.first = self.second;
+                self.second = sum;
+                result
+            }
+        }
+
+        assert_eq!(
+            vec![0, 1, 1, 2, 3, 5, 8],
+            Fibonacci::new().take(7).collect::<Vec<usize>>()
+        );
+
+        Fibonacci::new().take(10).for_each(|n| print!("{n} "))
+    }
+
     // #[test]
     // fn iterator_question() {
     //     let items  = [1,2,3];
